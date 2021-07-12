@@ -1,18 +1,71 @@
 <!DOCTYPE html>
 <style>
+    body {
+        background: beige;
+    }
+    #boardcontainer {
+        position:relative;
+    }
     #board {
-        display: grid;
-        grid-template-columns: repeat(3, 100px);
-        grid-template-rows: repeat(3, 100px);
+        display: none;
+        margin-top:10px;
+        justify-content: center;
+        grid-template-columns: repeat(3, 200px);
+        grid-template-rows: repeat(3, 200px);
         text-align:center;
-        line-height:100px;
+        font-size:200px;
+        line-height:200px;
+    }
+    #reset {
+        display:none;
+        width: 100px;
+        height: 50px;
+        font-size: 25px;
+        margin: 0 auto;
+        margin-top:40px;
+    }
+    form{
+        display:none;
+    }
+    #player1, #player2, #play {
+        display:block;
+        margin-right: auto;
+        margin-left:auto;
+        margin-top:60px;
+        width:300px;
+        height:70px;
+        text-align: center;
+        font-size:30px;
+        margin-bottom:10px;
+    }
+    #player1:hover, #player2:hover {
+        border-color: aqua;
+    }
+    #oneplayer, #twoplayer{
+        display:block;
+        background-color:lightgray;
+        width:300px;
+        height:100px;
+        text-align:center;
+        line-height: 100px;
+        font-size:40px;
+        margin:0 auto;
+        margin-top:100px;
+        margin-bottom:50px;
+    }
+    #oneplayer:hover, #twoplayer:hover{
+        background-color:rgb(223, 223, 223);
     }
 </style>
 <head>
 
 </head>
 <body>
-    <div id = "board"></div>
+    <div id = "boardcontainer">
+        <div id = "board"></div>
+    </div>
+    <button id = "oneplayer">One Player</button>
+    <button id = "twoplayer">Two Player</button>
     <button id = "reset">Reset</button>
     <form id = "form">
         <input type = "text" placeholder = "Player one name" id = "player1"></input>
