@@ -36,6 +36,7 @@ reset.addEventListener("click", function(){
     }
     playerOneTurn = true;
     deleteBoard()
+    win = false;
 })
 play.addEventListener("click", function(){
     playerOne = player(player1.value);
@@ -68,6 +69,7 @@ displayBoard();
 function addSymb(id){
     id = id.slice(10)
     counter++;
+    console.log(counter)
     
     if (id >= 0 && id <= 2){
         if (!(gameboard.firstRow[id])){
@@ -84,15 +86,17 @@ function addSymb(id){
             gameboard.lastRow[id%3] = getTurn();
         }
     }
+    checkWin(id)
+    
     if (playerOneTurn == false){
         if (onePlayer == true){
             if (win != true){
-                computerMove();
+                computerMove(id);
+                checkWin(id)
             }
         }
     }
     deleteBoard()
-    checkWin(id)
     
 }
 function getTurn (){
@@ -177,7 +181,7 @@ function checkWin(piece){
         if (gameboard.firstRow[i] && gameboard.middleRow[i] && gameboard.lastRow[i]){
             if (gameboard.firstRow[i] == gameboard.middleRow[i] && gameboard.firstRow[i] == gameboard.lastRow[i]){
                 win = true;
-                if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn == true && onePlayer == true)){
+                if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn != true && onePlayer == true)){
                     alert(playerOne.name + " wins, vertically.")
                 }
                 else {
@@ -194,7 +198,7 @@ function checkWin(piece){
             if (gameboard.firstRow[0] && gameboard.firstRow[1] && gameboard.firstRow[2]){
                 if (gameboard.firstRow[0] == gameboard.firstRow[1] && gameboard.firstRow[0] == gameboard.firstRow[2]){
                     win = true;
-                    if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn == true && onePlayer == true)){
+                    if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn != true && onePlayer == true)){
                         alert(playerOne.name + " wins, horziontally.")
                     }
                     else {
@@ -211,7 +215,7 @@ function checkWin(piece){
             if (gameboard.middleRow[0] && gameboard.middleRow[1] && gameboard.middleRow[2]){
                 if (gameboard.middleRow[0] == gameboard.middleRow[1] && gameboard.middleRow[0] == gameboard.middleRow[2]){
                     win = true;
-                    if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn == true && onePlayer == true)){
+                    if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn != true && onePlayer == true)){
                         alert(playerOne.name + " wins, horziontally.")
                     }
                     else {
@@ -228,7 +232,7 @@ function checkWin(piece){
             if (gameboard.lastRow[0] && gameboard.lastRow[1] && gameboard.lastRow[2]){
                 if (gameboard.lastRow[0] == gameboard.lastRow[1] && gameboard.lastRow[0] == gameboard.lastRow[2]){
                     win = true;
-                    if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn == true && onePlayer == true)){
+                    if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn != true && onePlayer == true)){
                         alert(playerOne.name + " wins, horziontally.")
                     }
                     else {
@@ -244,7 +248,7 @@ function checkWin(piece){
     if ((gameboard.firstRow[0] == gameboard.middleRow[1] && gameboard.firstRow[0] == gameboard.lastRow[2] && gameboard.middleRow[1] != null)
     || (gameboard.firstRow[2] == gameboard.middleRow[1] && gameboard.firstRow[2] == gameboard.lastRow[0]&& gameboard.middleRow[1] != null)){
         win = true;
-        if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn == true && onePlayer == true)){
+        if ((playerOneTurn != true && onePlayer == false)|| (playerOneTurn != true && onePlayer == true)){
             alert(playerOne.name + " wins, diagonally")
         }
         else {
@@ -257,29 +261,32 @@ function checkWin(piece){
         alert("tie")
     }
 }
-function computerMove(){
+function computerMove(id){
     let random = parseInt((Math.random() *9))
     if (random < 3){
         if (gameboard.firstRow[random] != null){
-            while (gameboard.firstRow[random] != null){
+            while (gameboard.firstRow[random] != null || random == parseInt(id)){
                 random = parseInt((Math.random() *9))
+                
             }
         }
     }
-    else if (random < 3){
+    else if (random < 6){
         if (gameboard.middleRow[random%3] != null){
-            while (gameboard.firstRow[random%3] != null){
+            while (gameboard.middleRow[random%3] != null || random == parseInt(id)){
                 random = parseInt((Math.random() *9))
             }
         }
     }
     else{
         if (gameboard.lastRow[random%3] != null){
-            while (gameboard.firstRow[random%3] != null){
+            while (gameboard.lastRow[random%3] != null || random == parseInt(id)){
                 random = parseInt((Math.random() *9))
+
             }
         }
     }
+    console.log("random: " + random)
     addSymb("boardpiece" + random);
     playerOneTurn = true;
 }   
